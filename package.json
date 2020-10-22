@@ -1,0 +1,31 @@
+{
+  "name": "neutron-cube",
+  "version": "1.0.0",
+  "description": "code editor in your web browser",
+  "main": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "parcel serve src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pizzapanther/neutron-cube.git"
+  },
+  "author": "Paul Bailey",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/pizzapanther/neutron-cube/issues"
+  },
+  "homepage": "https://github.com/pizzapanther/neutron-cube#readme",
+  "alias": {
+    "vue": "./node_modules/vue/dist/vue.common.js"
+  },
+  "dependencies": {
+    "@mdi/font": "^5.7.55",
+    "core-js": "^3.6.5",
+    "parcel-bundler": "^1.12.4",
+    "typeface-roboto": "^1.1.13",
+    "vue": "^2.6.12",
+    "vuetify": "^2.3.15"
+  }
+}

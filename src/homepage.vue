@@ -9,10 +9,24 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="text-center">
+        <v-col class="text-center" v-if="compatible">
+          <v-divider></v-divider>
+          <br />
           <v-btn :to="{ name: 'editor' }" color="primary">
             Start Editing
           </v-btn>
+          <br />
+          <br />
+          <v-divider></v-divider>
+        </v-col>
+        <v-col class="text-center" v-else>
+          <v-divider></v-divider>
+          <br />
+          <h2>
+            Your browser is not compatible with the native file system API.
+          </h2>
+          <br />
+          <v-divider></v-divider>
         </v-col>
       </v-row>
       <v-row>
@@ -36,7 +50,17 @@
   </v-main>
 </template>
 <script>
-export default {};
+export default {
+  computed: {
+    compatible() {
+      if (window.showOpenFilePicker && window.showDirectoryPicker) {
+        return true;
+      }
+
+      return false;
+    },
+  },
+};
 </script>
 <style scoped lang="less">
 .header {

@@ -21,6 +21,12 @@ export default {
   methods: {
     open_file() {
       console.log("narf");
+      window
+        .showOpenFilePicker()
+        .then((filehandles) => {
+          console.log(filehandles);
+        })
+        .catch((e) => {});
     },
   },
 };

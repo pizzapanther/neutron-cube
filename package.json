@@ -26,6 +26,7 @@
     "parcel-bundler": "^1.12.4",
     "typeface-roboto": "^1.1.13",
     "vue": "^2.6.12",
+    "vue-router": "^3.4.7",
     "vuetify": "^2.3.15"
   }
 }

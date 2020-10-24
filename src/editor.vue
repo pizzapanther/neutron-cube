@@ -3,7 +3,9 @@
     <menu-bar></menu-bar>
     <v-navigation-drawer v-model="drawer" app> side nav </v-navigation-drawer>
     <v-main>
-      <v-container fluid> editor </v-container>
+      <v-container fluid>
+        <m-editor></m-editor>
+      </v-container>
     </v-main>
   </div>
   <div v-else>
@@ -12,15 +14,22 @@
 </template>
 <script>
 import MenuBar from "./widgets/menu-bar.vue";
+import MEditor from "./widgets/m-edit.vue";
 
 export default {
-  components: { MenuBar },
+  components: { MenuBar, MEditor },
   data() {
-    return {
-      drawer: null,
-    };
+    return {};
   },
   computed: {
+    drawer: {
+      get() {
+        return this.$store.state.drawer;
+      },
+      set(value) {
+        this.$store.commit("set_drawer", value);
+      },
+    },
     compatible() {
       if (window.showOpenFilePicker && window.showDirectoryPicker) {
         return true;

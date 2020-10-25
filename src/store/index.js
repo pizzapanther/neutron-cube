@@ -15,10 +15,17 @@ var Store = new Vuex.Store({
     set_drawer(state, value) {
       state.drawer = value;
     },
+    append_file(state, file) {
+      state.files.push(file);
+    },
+    increment_active(state) {
+      state.active_file = state.files.length - 1;
+    },
   },
   actions: {
     add_file(context, file) {
-      console.log(file.contents);
+      context.commit("append_file", file);
+      context.commit("increment_active");
     },
   },
   modules: {

@@ -1,10 +1,12 @@
-class LocalFile {
+import BaseFile from "./base.js";
+
+class LocalFile extends BaseFile {
   constructor(fh) {
+    super();
+
     this.fh = fh;
     this.name = fh.name;
     this.filetype = "local";
-    this.size = 0;
-    this.lastModified = 0;
   }
 
   open() {
@@ -16,7 +18,8 @@ class LocalFile {
           this.lastModified = file.lastModified;
           var reader = new FileReader();
           reader.onload = () => {
-            resolve({ file: this, contents: reader.result });
+            this.init_contents = reader.result;
+            resolve(this);
           };
           reader.readAsText(file);
         })
@@ -33,8 +36,8 @@ class LocalFile {
         filehandles.forEach((fh) => {
           new LocalFile(fh)
             .open()
-            .then((payload) => {
-              context.dispatch("add_file", payload, { root: true });
+            .then((file) => {
+              context.dispatch("add_file", file, { root: true });
             })
             .catch((e) => {});
         });

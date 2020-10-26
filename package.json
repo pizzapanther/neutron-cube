@@ -4,6 +4,7 @@
   "description": "code editor in your web browser",
   "main": "src/index.html",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "./build_workers.bsh && parcel serve src/index.html",
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.vue\""
@@ -25,6 +26,7 @@
     "@mdi/font": "^5.7.55",
     "core-js": "^3.6.5",
     "monaco-editor": "^0.21.2",
+    "npm-force-resolutions": "0.0.3",
     "parcel-bundler": "^1.12.4",
     "prettier": "^2.1.2",
     "routing.js": "^1.1.7",
@@ -39,5 +41,8 @@
     "@vue/component-compiler-utils": "^3.2.0",
     "less": "^3.12.2",
     "vue-template-compiler": "^2.6.12"
+  },
+  "resolutions": {
+    "node-forge": "0.10.0"
   }
 }

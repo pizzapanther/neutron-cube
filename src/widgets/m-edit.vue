@@ -1,5 +1,24 @@
 <template>
-  <div id="m-editor" :style="mstyle"></div>
+  <div class="height100">
+    <div class="height100" id="editor-wrapper" v-if="files.length > 0">
+      <v-tabs center-active v-model="active" id="editor-tabs">
+        <v-tab v-for="(f, i) in files" :key="f.id">
+          <span>{{ f.name }}</span>
+          <v-btn icon @click="close_file(i)" x-small>
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-tab>
+      </v-tabs>
+      <div id="m-editor" :style="mstyle"></div>
+    </div>
+    <div
+      v-else
+      class="height100 d-flex flex-column justify-center align-center"
+    >
+      <h1>Neutron Cube</h1>
+      <img src="../images/icon-cube-red.png" alt="cube logo" />
+    </div>
+  </div>
 </template>
 <script>
 import * as monaco from "monaco-editor";
@@ -33,8 +52,16 @@ export default {
     files() {
       return this.$store.state.files;
     },
-    active() {
-      return this.$store.state.active_file;
+    active: {
+      get() {
+        return this.$store.state.active_file;
+      },
+      set(value) {
+        this.$store.commit("set_active", value);
+      },
+    },
+    winheight() {
+      return this.$store.state.winsize.height;
     },
   },
   watch: {
@@ -42,6 +69,13 @@ export default {
       this.init();
     },
     files(to, from) {
+      if (to.length == 0) {
+        if (this.editor) {
+          this.editor.dispose();
+          this.editor = null;
+        }
+      }
+
       to.forEach((f) => {
         if (!f.model) {
           f.init_model(monaco.editor);
@@ -57,17 +91,50 @@ export default {
         this.set_active();
       });
     },
+    winheight(to, from) {
+      this.init();
+    },
   },
   mounted() {
     this.init();
   },
   methods: {
-    init() {
+    init(set_active) {
       this.$nextTick(() => {
-        this.editor = monaco.editor.create(document.getElementById("m-editor"));
+        if (this.files.length > 0) {
+          if (!this.editor) {
+            this.editor = monaco.editor.create(
+              document.getElementById("m-editor")
+            );
+          }
+
+          var barh = document.querySelector(".v-system-bar").offsetHeight;
+          var tabsh = document.getElementById("editor-tabs").offsetHeight;
+          var h = this.winheight - (barh + tabsh + 5);
+          var w = document.getElementById("editor-wrapper").offsetWidth;
+
+          if (h < 300) {
+            h = 300;
+          }
+
+          this.mstyle.height = `${h}px`;
+          this.editor.layout({ height: h, width: w });
+          if (set_active) {
+            this.set_active();
+          }
+        }
       });
     },
     set_active() {
+      if (this.active == null) {
+        return;
+      }
+
+      if (!this.editor) {
+        this.init(true);
+        return;
+      }
+
       if (this.files[this.active].model) {
         this.editor.setModel(this.files[this.active].model);
         if (this.files[this.active].state) {
@@ -80,10 +147,19 @@ export default {
         });
       }
     },
+    close_file(index) {
+      this.files[index].model.dispose();
+      this.$store.commit("pop_file", index);
+    },
   },
 };
 </script>
 <style lang="less" scoped>
+.v-tab {
+  text-transform: none;
+}
+
 #m-editor {
+  margin-top: 5px;
 }
 </style>

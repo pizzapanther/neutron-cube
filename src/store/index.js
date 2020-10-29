@@ -10,6 +10,7 @@ var Store = new Vuex.Store({
     drawer: null,
     files: [],
     active_file: null,
+    winsize: { width: 0, height: 0 },
   },
   mutations: {
     set_drawer(state, value) {
@@ -18,8 +19,24 @@ var Store = new Vuex.Store({
     append_file(state, file) {
       state.files.push(file);
     },
+    pop_file(state, index) {
+      state.files.splice(index, 1);
+
+      if (state.files.length == 0) {
+        state.active_file = null;
+      } else if (state.active_file >= state.files.length) {
+        state.active_file = state.files.length - 1;
+      }
+    },
     increment_active(state) {
       state.active_file = state.files.length - 1;
+    },
+    set_active(state, value) {
+      state.active_file = value;
+    },
+    set_winsize(state, size) {
+      state.winsize.width = size.width;
+      state.winsize.height = size.height;
     },
   },
   actions: {

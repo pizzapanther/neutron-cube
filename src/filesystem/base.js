@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
+import { EXTENSIONS } from "../lib/modes.js";
+
 class BaseFile {
   constructor() {
     this.id = uuidv4();
@@ -13,8 +15,19 @@ class BaseFile {
   }
 
   init_model(editor) {
-    this.model = editor.createModel(this.init_contents || "", "javascript");
+    this.model = editor.createModel(this.init_contents || "", this.lang_type());
     this.init_contents = null;
+  }
+
+  lang_type() {
+    var parts = this.name.split('.');
+    var ext = parts[parts.length - 1].toLowerCase();
+
+    if (EXTENSIONS[ext]) {
+      return EXTENSIONS[ext];
+    }
+
+    return "plaintext";
   }
 }
 

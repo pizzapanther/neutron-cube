@@ -110,7 +110,7 @@ export default {
 
           var barh = document.querySelector(".v-system-bar").offsetHeight;
           var tabsh = document.getElementById("editor-tabs").offsetHeight;
-          var h = this.winheight - (barh + tabsh + 5);
+          var h = this.winheight - (barh + tabsh);
           var w = document.getElementById("editor-wrapper").offsetWidth;
 
           if (h < 300) {
@@ -159,7 +159,5 @@ export default {
   text-transform: none;
 }
 
-#m-editor {
-  margin-top: 5px;
-}
+#m-editor {}
 </style>

@@ -20,7 +20,7 @@ class BaseFile {
   }
 
   lang_type() {
-    var parts = this.name.split('.');
+    var parts = this.name.split(".");
     var ext = parts[parts.length - 1].toLowerCase();
 
     if (EXTENSIONS[ext]) {

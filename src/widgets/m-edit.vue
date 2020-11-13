@@ -159,5 +159,6 @@ export default {
   text-transform: none;
 }
 
-#m-editor {}
+#m-editor {
+}
 </style>

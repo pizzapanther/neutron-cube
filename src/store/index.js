@@ -73,7 +73,25 @@ var Store = new Vuex.Store({
       }
     },
     save_all_files(context) {
-      console.log("save all");
+      var promises = [];
+      context.state.files.forEach((file) => {
+        promises.push(file.save());
+      });
+
+      Promise.all(promises)
+        .then(() => {
+          context.commit("set_snack", {
+            text: "All Files Saved",
+            timeout: 500,
+          });
+        })
+        .catch((e) => {
+          console.log("Error", e);
+          context.commit("set_snack", {
+            text: "Error Saving Files",
+            timeout: 2000,
+          });
+        });
     },
   },
   modules: {

@@ -11,6 +11,8 @@ var Store = new Vuex.Store({
     files: [],
     active_file: null,
     winsize: { width: 0, height: 0 },
+    snack_text: null,
+    snack_timeout: 3000,
   },
   mutations: {
     set_drawer(state, value) {
@@ -38,6 +40,12 @@ var Store = new Vuex.Store({
       state.winsize.width = size.width;
       state.winsize.height = size.height;
     },
+    set_snack(state, kwargs) {
+      state.snack_text = kwargs.text;
+      if (kwargs.timeout) {
+        state.snack_timeout = kwargs.timeout;
+      }
+    },
   },
   actions: {
     add_file(context, file) {
@@ -50,11 +58,17 @@ var Store = new Vuex.Store({
         active
           .save()
           .then(() => {
-            // snack saved
+            context.commit("set_snack", {
+              text: `Saved: ${active.name}`,
+              timeout: 500,
+            });
           })
           .catch((e) => {
             console.log("Error", e);
-            // snack error
+            context.commit("set_snack", {
+              text: `Error saving: ${active.name}`,
+              timeout: 2000,
+            });
           });
       }
     },

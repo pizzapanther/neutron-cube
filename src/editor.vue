@@ -5,7 +5,9 @@
         snack_text
       }}</v-snackbar>
       <menu-bar></menu-bar>
-      <v-navigation-drawer v-model="drawer" app> side nav </v-navigation-drawer>
+      <v-navigation-drawer v-model="drawer" app>
+        <file-browser></file-browser>
+      </v-navigation-drawer>
       <v-main class="height100">
         <v-container class="main-container height100" fluid>
           <m-editor></m-editor>
@@ -22,9 +24,10 @@ import { debounce } from "debounce";
 
 import MenuBar from "./widgets/menu-bar.vue";
 import MEditor from "./widgets/m-edit.vue";
+import FileBrowser from "./widgets/file-browser.vue";
 
 export default {
-  components: { MenuBar, MEditor },
+  components: { MenuBar, MEditor, FileBrowser },
   data() {
     return {};
   },

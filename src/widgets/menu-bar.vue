@@ -20,7 +20,10 @@
 var Menus = [
   {
     name: "File",
-    items: [{ name: "Open Files", action: "localfile/open_files" }],
+    items: [
+      { name: "Open Files", action: "localfile/open_files" },
+      { name: "Open Directory", action: "localfile/open_directory" },
+    ],
   },
 ];
 

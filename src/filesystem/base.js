@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { EXTENSIONS } from "../lib/modes.js";
 
-class BaseFile {
+export class BaseFile {
   constructor() {
     this.id = uuidv4();
     this.name = null;
@@ -31,4 +31,22 @@ class BaseFile {
   }
 }
 
-export default BaseFile;
+export class BaseDir {
+  constructor() {
+    this.id = uuidv4();
+    this.name = null;
+    this.children = [];
+  }
+
+  static sort_name(a, b) {
+    if (a.name < b.name) {
+      return -1;
+    }
+
+    if (a.name > b.name) {
+      return 1;
+    }
+
+    return 0;
+  }
+}

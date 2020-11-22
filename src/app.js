@@ -1,3 +1,5 @@
+import "regenerator-runtime/runtime";
+
 import Vue from "vue";
 import Vuetify from "vuetify";
 import VueRouter from "vue-router";

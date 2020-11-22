@@ -1,6 +1,6 @@
-import BaseFile from "./base.js";
+import { BaseFile, BaseDir } from "./base.js";
 
-class LocalFile extends BaseFile {
+export class LocalFile extends BaseFile {
   constructor(fh) {
     super();
 
@@ -70,3 +70,50 @@ class LocalFile extends BaseFile {
 }
 
 export default LocalFile;
+
+export class LocalDirectory extends BaseDir {
+  constructor(dh) {
+    super();
+
+    this.dh = dh;
+    this.name = dh.name;
+    this.dirtype = "local";
+  }
+
+  async _list(item) {
+    if (!item) {
+      item = this;
+    }
+    var dirs = [];
+    var files = [];
+
+    for await (var entry of this.dh.values()) {
+      if (entry.kind == "directory") {
+        entry.children = [];
+        dirs.push(entry);
+      } else {
+        files.push(entry);
+      }
+    }
+
+    dirs.sort(LocalDirectory.sort_name);
+    files.sort(LocalDirectory.sort_name);
+    item.children = dirs;
+  }
+
+  list(item) {
+    (async () => await this._list(item))();
+  }
+
+  static open_directory(context) {
+    return new Promise((resolve, reject) => {
+      showDirectoryPicker()
+        .then((dh) => {
+          resolve(new LocalDirectory(dh));
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+}

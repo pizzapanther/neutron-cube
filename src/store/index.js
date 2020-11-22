@@ -44,6 +44,23 @@ var Store = new Vuex.Store({
       context.commit("append_file", file);
       context.commit("increment_active");
     },
+    save_current_file(context) {
+      if (context.state.active_file !== null) {
+        var active = context.state.files[context.state.active_file];
+        active
+          .save()
+          .then(() => {
+            // snack saved
+          })
+          .catch((e) => {
+            console.log("Error", e);
+            // snack error
+          });
+      }
+    },
+    save_all_files(context) {
+      console.log("save all");
+    },
   },
   modules: {
     localfile,

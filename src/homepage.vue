@@ -41,7 +41,7 @@
             <ul>
               <li>Works Offline <em>coming soon</em></li>
               <li>Edit local files</li>
-              <li>Syntax Highlighting for XX Languages</li>
+              <li>Syntax Highlighting for 68 Languages</li>
             </ul>
           </div>
         </v-col>

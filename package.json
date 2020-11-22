@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "./build_workers.bsh && parcel serve src/index.html",
+    "dev": "./build_workers.bsh && parcel serve --no-hmr src/index.html",
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.vue\""
   },
   "repository": {

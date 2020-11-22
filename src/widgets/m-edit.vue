@@ -23,6 +23,8 @@
 <script>
 import * as monaco from "monaco-editor";
 
+import bind_keys from "../lib/keybinding.js";
+
 self.MonacoEnvironment = {
   getWorkerUrl: function (moduleId, label) {
     if (label === "json") {
@@ -106,6 +108,7 @@ export default {
             this.editor = monaco.editor.create(
               document.getElementById("m-editor")
             );
+            bind_keys(this.$store, monaco, this.editor);
           }
 
           var barh = document.querySelector(".v-system-bar").offsetHeight;

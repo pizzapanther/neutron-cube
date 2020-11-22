@@ -29,6 +29,27 @@ class LocalFile extends BaseFile {
     });
   }
 
+  save() {
+    return new Promise((resolve, reject) => {
+      var wh;
+      this.fh
+        .createWritable()
+        .then((writeable) => {
+          wh = writeable;
+          return wh.write(this.model.getValue());
+        })
+        .then(() => {
+          return wh.close();
+        })
+        .then(() => {
+          resolve();
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+  }
+
   static open_files(context) {
     window
       .showOpenFilePicker({ multiple: true })

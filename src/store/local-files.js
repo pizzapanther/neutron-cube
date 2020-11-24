@@ -14,16 +14,9 @@ export default {
     open_files(context) {
       LocalFile.open_files(context);
     },
-    open_directory(context) {
-      LocalDirectory.open_directory(context)
-        .then((dir) => {
-          context.commit("add_dir", dir);
-          return dir.list();
-        })
-        .then((dir) => {})
-        .catch((e) => {
-          // user abort??
-        });
+    async open_directory(context) {
+      var dir = await LocalDirectory.open_directory(context);
+      return context.commit("add_dir", dir);
     },
   },
 };

@@ -36,14 +36,19 @@ export class BaseDir {
     this.id = uuidv4();
     this.name = null;
     this.children = [];
+    this.kind = "directory";
+  }
+
+  static new_id(item) {
+    item.id = uuidv4();
   }
 
   static sort_name(a, b) {
-    if (a.name < b.name) {
+    if (a.name.toLowerCase() < b.name.toLowerCase()) {
       return -1;
     }
 
-    if (a.name > b.name) {
+    if (a.name.toLowerCase() > b.name.toLowerCase()) {
       return 1;
     }
 

@@ -1,4 +1,5 @@
 import { BaseFile, BaseDir } from "./base.js";
+import { v4 as uuidv4 } from "uuid";
 
 export class LocalFile extends BaseFile {
   constructor(fh) {
@@ -78,31 +79,49 @@ export class LocalDirectory extends BaseDir {
     this.dh = dh;
     this.name = dh.name;
     this.dirtype = "local";
+    this.root = true;
+    this.root_class = LocalDirectory;
   }
 
-  async _list(item) {
-    if (!item) {
-      item = this;
+  static async get_dir_handle(item) {
+    if (!item.parent.dh) {
+      console.log(item.parent);
+      item.parent.dh = await LocalDirectory.get_dir_handle(item.parent);
     }
+
+    return await item.parent.dh.getDirectoryHandle(item.name);
+  }
+
+  static async list(item) {
+    console.log("Listing", item.name);
     var dirs = [];
     var files = [];
 
-    for await (var entry of this.dh.values()) {
+    if (!item.dh) {
+      item.dh = await LocalDirectory.get_dir_handle(item);
+    }
+
+    for await (var entry of item.dh.values()) {
+      var e = {
+        name: entry.name,
+        kind: entry.kind,
+        id: uuidv4(),
+        parent: item,
+        root_class: LocalDirectory,
+      };
+
       if (entry.kind == "directory") {
-        entry.children = [];
-        dirs.push(entry);
+        e.children = [];
+        dirs.push(e);
       } else {
-        files.push(entry);
+        files.push(e);
       }
     }
 
     dirs.sort(LocalDirectory.sort_name);
     files.sort(LocalDirectory.sort_name);
     item.children = dirs;
-  }
-
-  list(item) {
-    (async () => await this._list(item))();
+    item.children.push(...files);
   }
 
   static open_directory(context) {

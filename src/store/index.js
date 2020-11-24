@@ -9,6 +9,7 @@ var Store = new Vuex.Store({
   state: {
     drawer: null,
     files: [],
+    directories: [],
     active_file: null,
     winsize: { width: 0, height: 0 },
     snack_text: null,
@@ -20,6 +21,9 @@ var Store = new Vuex.Store({
     },
     append_file(state, file) {
       state.files.push(file);
+    },
+    append_dir(state, dir) {
+      state.directories.push(dir);
     },
     pop_file(state, index) {
       state.files.splice(index, 1);
@@ -51,6 +55,9 @@ var Store = new Vuex.Store({
     add_file(context, file) {
       context.commit("append_file", file);
       context.commit("increment_active");
+    },
+    add_directory(context, dir) {
+      context.commit("append_dir", dir);
     },
     save_current_file(context) {
       if (context.state.active_file !== null) {

@@ -93,7 +93,6 @@ export class LocalDirectory extends BaseDir {
   }
 
   static async list(item) {
-    console.log("Listing", item.name);
     var dirs = [];
     var files = [];
 
@@ -128,7 +127,9 @@ export class LocalDirectory extends BaseDir {
     return new Promise((resolve, reject) => {
       showDirectoryPicker()
         .then((dh) => {
-          resolve(new LocalDirectory(dh));
+          var dh = new LocalDirectory(dh);
+          context.dispatch("add_directory", dh, { root: true });
+          resolve(dh);
         })
         .catch((e) => {
           reject(e);

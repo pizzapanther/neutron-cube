@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.state.localfile.directories;
+      return this.$store.state.directories;
     },
   },
   watch: {

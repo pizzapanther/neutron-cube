@@ -14,8 +14,16 @@ var Store = new Vuex.Store({
     winsize: { width: 0, height: 0 },
     snack_text: null,
     snack_timeout: 3000,
+    release: null,
+    needs_update: false,
   },
   mutations: {
+    set_release(state, release) {
+      state.release = release;
+    },
+    set_needs_update(state) {
+      state.needs_update = true;
+    },
     set_drawer(state, value) {
       state.drawer = value;
     },
@@ -52,6 +60,7 @@ var Store = new Vuex.Store({
     },
   },
   actions: {
+    force_update(context) {},
     add_file(context, file) {
       context.commit("append_file", file);
       context.commit("increment_active");

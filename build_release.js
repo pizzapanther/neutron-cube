@@ -61,6 +61,16 @@ function main () {
       });
     });
   });
+
+  var rdata = `${JSON.stringify({release})}\n`;
+  fs.writeFile('dist/release.json', rdata, 'utf8', function (err) {
+    if (err) {
+      console.log(err);
+      process.exit(1);
+    }
+
+    console.log('Built:', 'dist/release.json');
+  });
 }
 
 if (!module.parent) {

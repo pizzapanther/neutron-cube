@@ -13,6 +13,10 @@
           </v-list-item>
         </v-list>
       </v-menu>
+      <span v-if="needs_update" class="update">
+        Update Available:
+        <v-btn text color="error" @click="update()">Reload Now</v-btn>
+      </span>
     </div>
   </v-system-bar>
 </template>
@@ -33,10 +37,23 @@ export default {
       menus: Menus,
     };
   },
+  computed: {
+    needs_update() {
+      return this.$store.state.needs_update;
+    },
+  },
   methods: {
     menu_action(action, payload) {
       this.$store.dispatch(action, payload);
     },
+    update() {
+      this.$store.dispatch("force_update");
+    },
   },
 };
 </script>
+<style lang="less" scoped>
+.update {
+  padding-left: 15px;
+}
+</style>

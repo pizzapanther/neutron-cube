@@ -4,7 +4,7 @@
       <v-row class="header">
         <v-col class="text-center">
           <h1>Neutron Cube</h1>
-          <img src="images/icon-cube-red.png" alt="cube logo" />
+          <img src="../images/icon-cube-red.png" alt="cube logo" />
           <h2>a browser based code editor</h2>
         </v-col>
       </v-row>

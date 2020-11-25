@@ -9,7 +9,7 @@ import "vuetify/dist/vuetify.min.css";
 import "@mdi/font/css/materialdesignicons.css";
 import "typeface-roboto/index.css";
 
-import Router from "./routing.js";
+import Router from "./pages/routing.js";
 import Store from "./store/index.js";
 
 Vue.use(Vuetify);

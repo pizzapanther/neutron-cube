@@ -22,9 +22,9 @@
 <script>
 import { debounce } from "debounce";
 
-import MenuBar from "./widgets/menu-bar.vue";
-import MEditor from "./widgets/m-edit.vue";
-import FileBrowser from "./widgets/file-browser.vue";
+import MenuBar from "../widgets/menu-bar.vue";
+import MEditor from "../widgets/m-edit.vue";
+import FileBrowser from "../widgets/file-browser.vue";
 
 export default {
   components: { MenuBar, MEditor, FileBrowser },

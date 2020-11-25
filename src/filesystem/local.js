@@ -84,12 +84,20 @@ export class LocalDirectory extends BaseDir {
   }
 
   static async get_dir_handle(item) {
-    if (!item.parent.dh) {
-      console.log(item.parent);
-      item.parent.dh = await LocalDirectory.get_dir_handle(item.parent);
+    try {
+      if (!item.dh) {
+        if (!item.parent.dh) {
+          console.log(item.parent);
+          item.parent.dh = await LocalDirectory.get_dir_handle(item.parent);
+        }
+
+        item.dh = await item.parent.dh.getDirectoryHandle(item.name);
+      }
+    } catch (e) {
+      console.error(e);
     }
 
-    return await item.parent.dh.getDirectoryHandle(item.name);
+    return item.dh;
   }
 
   static async list(item) {
@@ -97,7 +105,7 @@ export class LocalDirectory extends BaseDir {
     var files = [];
 
     if (!item.dh) {
-      item.dh = await LocalDirectory.get_dir_handle(item);
+      await LocalDirectory.get_dir_handle(item);
     }
 
     for await (var entry of item.dh.values()) {
@@ -135,5 +143,13 @@ export class LocalDirectory extends BaseDir {
           reject(e);
         });
     });
+  }
+
+  static async open_file(item, store) {
+    var dh = await LocalDirectory.get_dir_handle(item.parent);
+    var fh = await dh.getFileHandle(item.name);
+    var file = new LocalFile(fh);
+    await file.open();
+    store.dispatch("add_file", file);
   }
 }

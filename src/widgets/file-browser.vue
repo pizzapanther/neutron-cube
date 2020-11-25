@@ -4,11 +4,14 @@
       v-model="tree"
       :items="items"
       :load-children="fetch_children"
+      :active.sync="activated"
       :open.sync="opened"
+      activatable
       dense
       hoverable
       open-on-click
       transition
+      return-object
     >
       <template v-slot:prepend="{ item, open }">
         <v-icon v-if="item.kind == 'directory'" :id="`dir-${item.id}`">
@@ -23,9 +26,9 @@
 export default {
   data() {
     return {
+      activated: [],
       tree: [],
       opened: [],
-      item_index: {},
     };
   },
   computed: {
@@ -42,17 +45,34 @@ export default {
       }
     },
     opened(to, from) {
-      from.forEach((id) => {
-        if (to.indexOf(id) == -1 && this.item_index[id]) {
-          this.clear_children(this.item_index[id]);
+      var keep = to.map((t) => {
+        return t.id;
+      });
+
+      from.forEach((item) => {
+        if (keep.indexOf(item.id) == -1) {
+          this.clear_children(item);
         }
+      });
+    },
+    async activated(to, from) {
+      to.forEach(async (t) => {
+        await this.open_file_in_dir(t);
+        this.clear_active(t);
       });
     },
   },
   methods: {
     async fetch_children(item) {
       await item.root_class.list(item);
-      this.item_index[item.id] = item;
+    },
+    clear_active(id) {
+      setTimeout(() => {
+        var index = this.activated.indexOf(id);
+        if (index > -1) {
+          this.activated.splice(index, 1);
+        }
+      }, 500);
     },
     clear_children(item) {
       item.children.forEach((c) => {
@@ -61,14 +81,13 @@ export default {
         }
       });
 
-      if (this.item_index[item.id]) {
-        delete this.item_index[item.id];
-      }
-
       // clear children so it is refreshed from disk next open
       item.children = [];
       // create a new id so Vuetify resets node.hasLoaded
       item.root_class.new_id(item);
+    },
+    async open_file_in_dir(item) {
+      await item.root_class.open_file(item, this.$store);
     },
   },
 };

@@ -67,14 +67,14 @@ var Store = new Vuex.Store({
           .then(() => {
             context.commit("set_snack", {
               text: `Saved: ${active.name}`,
-              timeout: 500,
+              timeout: 750,
             });
           })
           .catch((e) => {
             console.log("Error", e);
             context.commit("set_snack", {
               text: `Error saving: ${active.name}`,
-              timeout: 2000,
+              timeout: 2500,
             });
           });
       }
@@ -96,7 +96,7 @@ var Store = new Vuex.Store({
           console.log("Error", e);
           context.commit("set_snack", {
             text: "Error Saving Files",
-            timeout: 2000,
+            timeout: 2500,
           });
         });
     },

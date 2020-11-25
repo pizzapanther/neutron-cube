@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -rf dist
+./build_workers.bsh
+parcel build src/index.html
+node build_release.js

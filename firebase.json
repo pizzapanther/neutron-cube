@@ -11,6 +11,22 @@
         "source": "**",
         "destination": "/index.html"
       }
+    ],
+    "headers": [
+      {
+        "source": "/",
+        "headers": [ {
+          "key": "Cache-Control",
+          "value": "No-Cache"
+        } ]
+      },
+      {
+        "source": "/editor",
+        "headers": [ {
+          "key": "Cache-Control",
+          "value": "No-Cache"
+        } ]
+      }
     ]
   }
 }

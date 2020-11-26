@@ -102,7 +102,7 @@ if ("serviceWorker" in navigator) {
           registration.scope
         );
 
-        Store.commit("set_release", RELEASE);
+        Store.commit("set_release", window.RELEASE);
         Store.subscribeAction((action, state) => {
           if (action.type == "force_update") {
             force_update();

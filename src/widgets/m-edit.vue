@@ -21,7 +21,7 @@
         alt="cube logo"
         style="height: 256px"
       />
-      <h3 v-if="release">Release V{{ release.substr(0, 7) }}</h3>
+      <h3 v-if="release">Release {{ release.substr(0, 7) }}</h3>
     </div>
   </div>
 </template>

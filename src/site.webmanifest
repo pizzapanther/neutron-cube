@@ -1,6 +1,7 @@
 {
     "name": "Neutron Cube",
-    "short_name": "Neutron",
+    "short_name": "Neutron Cube",
+    "start_url": "/editor",
     "icons": [
         {
             "src": "android-chrome-192x192.png",

@@ -38,7 +38,7 @@ var app = new Vue({
 
 function check_release() {
   axios
-    .get("release.json", { timeout: 5000 })
+    .get(`release.json?ts=${Date.now()}`, { timeout: 5000 })
     .then((response) => {
       if (response.data.release != RELEASE) {
         Store.commit("set_needs_update");

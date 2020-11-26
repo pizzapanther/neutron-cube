@@ -1,5 +1,5 @@
 const RELEASE = "{release}";
-const CACHE_NAME = `release-${RELEASE}`;
+const CACHE_NAME = `${RELEASE}`;
 const CORE_FILES = ["{core-files}"];
 
 self.addEventListener("install", function (event) {

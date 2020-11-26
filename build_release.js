@@ -35,6 +35,8 @@ function main () {
   files = files.map((f) => {
     return f.replace('dist/', '');
   });
+  files.push('/');
+  files.push('/editor');
 
   console.log('Release:', release);
   console.log('Total Files:', files.length);

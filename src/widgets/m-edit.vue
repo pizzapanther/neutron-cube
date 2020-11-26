@@ -16,7 +16,12 @@
       class="height100 d-flex flex-column justify-center align-center"
     >
       <h1>Neutron Cube</h1>
-      <img src="../images/icon-cube-red.png" alt="cube logo" />
+      <img
+        src="../images/icon-cube-red.png"
+        alt="cube logo"
+        style="height: 256px"
+      />
+      <h3 v-if="release">Release v{{ release.substr(0, 7) }}</h3>
     </div>
   </div>
 </template>
@@ -51,6 +56,9 @@ export default {
     };
   },
   computed: {
+    release() {
+      return this.$store.state.release;
+    },
     files() {
       return this.$store.state.files;
     },

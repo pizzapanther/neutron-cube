@@ -39,7 +39,7 @@
               <strong>Neutron Cube abilities:</strong>
             </p>
             <ul>
-              <li>Works Offline <em>coming soon</em></li>
+              <li>Works Offline</li>
               <li>Edit local files</li>
               <li>Syntax Highlighting for 68 Languages</li>
             </ul>

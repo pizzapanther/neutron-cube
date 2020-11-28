@@ -3,8 +3,19 @@
     <div class="height100" id="editor-wrapper" v-if="files.length > 0">
       <v-tabs center-active v-model="active" id="editor-tabs">
         <v-tab v-for="(f, i) in files" :key="f.id">
+          <v-btn
+            v-if="f.needs_reload"
+            icon
+            @click="f.reload(true)"
+            x-small
+            color="error"
+            title="File changed, reload from disk"
+          >
+            <v-icon>mdi-reload-alert</v-icon>
+          </v-btn>
+          <sup v-else-if="f.changed">*</sup>
           <span>{{ f.name }}</span>
-          <v-btn icon @click="close_file(i)" x-small>
+          <v-btn icon @click="close_file(i)" x-small title="Close file">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-tab>

@@ -13,6 +13,7 @@ import "typeface-roboto/index.css";
 
 import Router from "./pages/routing.js";
 import Store from "./store/index.js";
+import init_file_worker from "./workers/files-manager.js";
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
@@ -35,6 +36,8 @@ var app = new Vue({
   router: Router,
   store: Store,
 });
+
+init_file_worker();
 
 function check_release() {
   axios
@@ -91,7 +94,7 @@ function force_update() {
   }
 }
 
-if ("serviceWorker" in navigator) {
+if (!DEBUG && "serviceWorker" in navigator) {
   window.addEventListener("load", function () {
     navigator.serviceWorker.register("service-worker.js").then(
       function (registration) {

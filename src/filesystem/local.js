@@ -10,17 +10,18 @@ export class LocalFile extends BaseFile {
     this.filetype = "local";
   }
 
-  open() {
+  read_from_source() {
     return new Promise((resolve, reject) => {
       this.fh
         .getFile()
         .then((file) => {
-          this.size = file.size;
-          this.lastModified = file.lastModified;
           var reader = new FileReader();
           reader.onload = () => {
-            this.init_contents = reader.result;
-            resolve(this);
+            resolve({
+              size: file.size,
+              lastModified: file.lastModified,
+              text: reader.result,
+            });
           };
           reader.readAsText(file);
         })
@@ -43,6 +44,7 @@ export class LocalFile extends BaseFile {
           return wh.close();
         })
         .then(() => {
+          this.post_save();
           resolve();
         })
         .catch((e) => {
@@ -87,7 +89,6 @@ export class LocalDirectory extends BaseDir {
     try {
       if (!item.dh) {
         if (!item.parent.dh) {
-          console.log(item.parent);
           item.parent.dh = await LocalDirectory.get_dir_handle(item.parent);
         }
 
@@ -119,6 +120,7 @@ export class LocalDirectory extends BaseDir {
 
       if (entry.kind == "directory") {
         e.children = [];
+        e.dirtype = "local";
         dirs.push(e);
       } else {
         files.push(e);
@@ -127,6 +129,7 @@ export class LocalDirectory extends BaseDir {
 
     dirs.sort(LocalDirectory.sort_name);
     files.sort(LocalDirectory.sort_name);
+    item.dirhash = LocalDirectory.calc_hash(dirs, files);
     item.children = dirs;
     item.children.push(...files);
   }
@@ -135,7 +138,7 @@ export class LocalDirectory extends BaseDir {
     return new Promise((resolve, reject) => {
       showDirectoryPicker()
         .then((dh) => {
-          var dh = new LocalDirectory(dh);
+          dh = new LocalDirectory(dh);
           context.dispatch("add_directory", dh, { root: true });
           resolve(dh);
         })

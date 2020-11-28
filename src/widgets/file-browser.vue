@@ -28,12 +28,19 @@ export default {
     return {
       activated: [],
       tree: [],
-      opened: [],
     };
   },
   computed: {
     items() {
       return this.$store.state.directories;
+    },
+    opened: {
+      get() {
+        return this.$store.state.opened_dirs;
+      },
+      set(dirs) {
+        this.$store.commit("set_opened_dirs", dirs);
+      },
     },
   },
   watch: {

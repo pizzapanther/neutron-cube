@@ -17,14 +17,14 @@
         "source": "/",
         "headers": [ {
           "key": "Cache-Control",
-          "value": "No-Cache"
+          "value": "no-cache"
         } ]
       },
       {
         "source": "/editor",
         "headers": [ {
           "key": "Cache-Control",
-          "value": "No-Cache"
+          "value": "no-cache"
         } ]
       }
     ]

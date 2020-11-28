@@ -5,11 +5,20 @@ Vue.use(Vuex);
 
 import localfile from "./local-files.js";
 
+function find_id(id, items) {
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].id == id) {
+      return items[i];
+    }
+  }
+}
+
 var Store = new Vuex.Store({
   state: {
     drawer: null,
     files: [],
     directories: [],
+    opened_dirs: [],
     active_file: null,
     winsize: { width: 0, height: 0 },
     snack_text: null,
@@ -32,6 +41,9 @@ var Store = new Vuex.Store({
     },
     append_dir(state, dir) {
       state.directories.push(dir);
+    },
+    set_opened_dirs(state, dirs) {
+      state.opened_dirs = dirs;
     },
     pop_file(state, index) {
       state.files.splice(index, 1);
@@ -56,6 +68,15 @@ var Store = new Vuex.Store({
       state.snack_text = kwargs.text;
       if (kwargs.timeout) {
         state.snack_timeout = kwargs.timeout;
+      }
+    },
+    set_file_attrs(state, kwargs) {
+      var file = find_id(kwargs.id, state.files);
+      if (file) {
+        delete kwargs.id;
+        for (var key in kwargs) {
+          file[key] = kwargs[key];
+        }
       }
     },
   },

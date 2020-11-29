@@ -10,10 +10,11 @@
             x-small
             color="error"
             title="File changed, reload from disk"
+            class="reload"
           >
             <v-icon>mdi-reload-alert</v-icon>
           </v-btn>
-          <sup v-else-if="f.changed">*</sup>
+          <span v-else-if="f.changed" class="changed">*</span>
           <span>{{ f.name }}</span>
           <v-btn icon @click="close_file(i)" x-small title="Close file">
             <v-icon>mdi-close</v-icon>
@@ -186,6 +187,19 @@ export default {
 <style lang="less" scoped>
 .v-tab {
   text-transform: none;
+  position: relative;
+
+  .reload {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+  }
+
+  .changed {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+  }
 }
 
 #m-editor {

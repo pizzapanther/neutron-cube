@@ -122,6 +122,8 @@ export class BaseFile {
             changed: false,
             needs_reload: false,
           });
+          Store.commit("restore_editor_state", this.id);
+          Store.commit("focus_editor");
         })
         .catch((e) => {});
     }
@@ -170,4 +172,80 @@ export class BaseDir {
 
     return md5(children.join("\n"));
   }
+
+  static splice(item, new_children) {
+    var dirs = [];
+    var files = [];
+    var new_dirs = [];
+    var new_files = [];
+
+    item.children.forEach((c) => {
+      if (c.kind == "directory") {
+        dirs.push(c);
+      } else {
+        files.push(c);
+      }
+    });
+
+    new_children.forEach((c) => {
+      if (c.kind == "directory") {
+        new_dirs.push(c);
+      } else {
+        new_files.push(c);
+      }
+    });
+
+    var spliced_dirs = splice_arrays(dirs, new_dirs);
+    var spliced_files = splice_arrays(files, new_files);
+
+    spliced_dirs.sort(BaseDir.sort_name);
+    spliced_files.sort(BaseDir.sort_name);
+    var dirhash = BaseDir.calc_hash(spliced_dirs, spliced_files);
+    var children = spliced_dirs;
+    children.push(...spliced_files);
+    item.dirhash = dirhash;
+    item.children = children;
+    //console.log(spliced_dirs.map(m => m.name).join('\n'));
+    //console.log(spliced_files.map(m => m.name).join('\n'));
+  }
+}
+
+function splice_arrays(olda, newa) {
+  var spliced = [];
+
+  for (var i = 0; i < olda.length; i++) {
+    var found = null;
+    var o = olda[i];
+
+    for (var j = 0; j < newa.length; j++) {
+      var n = newa[j];
+      if (n.name == o.name) {
+        found = o;
+        break;
+      }
+    }
+
+    if (found) {
+      spliced.push(o);
+    }
+  }
+
+  for (var j = 0; j < newa.length; j++) {
+    n = newa[j];
+    found = null;
+
+    for (var i = 0; i < olda.length; i++) {
+      o = olda[i];
+      if (n.name == o.name) {
+        found = o;
+        break;
+      }
+    }
+
+    if (!found) {
+      spliced.push(n);
+    }
+  }
+
+  return spliced;
 }

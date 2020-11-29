@@ -63,10 +63,17 @@ export default {
   data() {
     return {
       mstyle: { height: "600px" },
-      editor: null,
     };
   },
   computed: {
+    editor: {
+      get() {
+        return this.$store.state.editor;
+      },
+      set(value) {
+        this.$store.commit("set_editor", value);
+      },
+    },
     release() {
       return this.$store.state.release;
     },

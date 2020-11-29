@@ -25,6 +25,7 @@ var Store = new Vuex.Store({
     snack_timeout: 3000,
     release: null,
     needs_update: false,
+    editor: null,
   },
   mutations: {
     set_release(state, release) {
@@ -35,6 +36,9 @@ var Store = new Vuex.Store({
     },
     set_drawer(state, value) {
       state.drawer = value;
+    },
+    set_editor(state, editor) {
+      state.editor = editor;
     },
     append_file(state, file) {
       state.files.push(file);
@@ -77,6 +81,22 @@ var Store = new Vuex.Store({
         for (var key in kwargs) {
           file[key] = kwargs[key];
         }
+      }
+    },
+    save_editor_state(state) {
+      if (state.editor && state.active_file !== null) {
+        state.files[state.active_file].state = state.editor.saveViewState();
+      }
+    },
+    restore_editor_state(state, fid) {
+      var current = Store.state.files[Store.state.active_file];
+      if (current.id == fid) {
+        state.editor.restoreViewState(state.files[state.active_file].state);
+      }
+    },
+    focus_editor(state) {
+      if (state.editor) {
+        state.editor.focus();
       }
     },
   },

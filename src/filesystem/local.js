@@ -102,6 +102,12 @@ export class LocalDirectory extends BaseDir {
   }
 
   static async list(item) {
+    var ret = await LocalDirectory._list(item);
+    item.dirhash = ret.dirhash;
+    item.children = ret.children;
+  }
+
+  static async _list(item) {
     var dirs = [];
     var files = [];
 
@@ -129,9 +135,10 @@ export class LocalDirectory extends BaseDir {
 
     dirs.sort(LocalDirectory.sort_name);
     files.sort(LocalDirectory.sort_name);
-    item.dirhash = LocalDirectory.calc_hash(dirs, files);
-    item.children = dirs;
-    item.children.push(...files);
+    var dirhash = LocalDirectory.calc_hash(dirs, files);
+    var children = dirs;
+    children.push(...files);
+    return { dirhash, children };
   }
 
   static open_directory(context) {

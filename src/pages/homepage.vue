@@ -46,6 +46,30 @@
           </div>
         </v-col>
       </v-row>
+      <v-row>
+        <v-col>
+          <v-divider></v-divider>
+          <br />
+          <h2>Changelog</h2>
+          <ul class="changelog">
+            <li>
+              <strong>V0.2 - 11/28/2020</strong>
+              <br />
+              <ul>
+                <li>Watch files for changes on disk</li>
+                <li>Watch directories for changes on disk</li>
+              </ul>
+            </li>
+            <li>
+              <strong>V0.1 - 11/26/2020</strong>
+              <br />
+              <ul>
+                <li>Initial Release</li>
+              </ul>
+            </li>
+          </ul>
+        </v-col>
+      </v-row>
     </v-container>
   </v-main>
 </template>
@@ -77,5 +101,13 @@ export default {
 .description {
   margin: 0 auto;
   max-width: 550px;
+}
+
+.changelog {
+  margin-left: 20px;
+
+  & > li {
+    margin-bottom: 30px;
+  }
 }
 </style>

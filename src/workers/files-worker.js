@@ -6,7 +6,14 @@ class Tasks {
   static async check_files(files) {
     var mods = [];
     for (var i = 0; i < files.length; i++) {
-      var m = await check_file(files[i]);
+      var m = null;
+      try {
+        m = await check_file(files[i]);
+      } catch (e) {
+        console.error(e);
+        m = null;
+      }
+
       if (m) {
         mods.push(m);
       }
@@ -18,7 +25,14 @@ class Tasks {
   static async check_dirs(dirs) {
     var mods = [];
     for (var i = 0; i < dirs.length; i++) {
-      var m = await check_dir(dirs[i]);
+      var m = null;
+      try {
+        m = await check_dir(dirs[i]);
+      } catch (e) {
+        console.error(e);
+        m = null;
+      }
+
       if (m) {
         mods.push(m);
       }

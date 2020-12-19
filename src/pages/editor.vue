@@ -5,6 +5,7 @@
         snack_text
       }}</v-snackbar>
       <menu-bar></menu-bar>
+      <component v-bind:is="dialog"></component>
       <v-navigation-drawer v-model="drawer" app>
         <file-browser></file-browser>
       </v-navigation-drawer>
@@ -45,8 +46,13 @@ export default {
     window.addEventListener("resize", () => {
       this.window_resize();
     });
+
+    this.$store.commit("settings/init_prefs");
   },
   computed: {
+    dialog() {
+      return this.$store.state.dialog;
+    },
     snack_text() {
       return this.$store.state.snack_text;
     },

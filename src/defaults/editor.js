@@ -1,361 +1,461 @@
 const PREFS = {
-    acceptSuggestionOnCommitCharacter: true,
+  acceptSuggestionOnCommitCharacter: true,
 
-    // "on" | "off" | "smart"
-    acceptSuggestionOnEnter: "on",
+  acceptSuggestionOnEnter: {
+    default: "on",
+    choices: ["on", "off", "smart"],
+  },
 
-    // 1: Disabled | 2: Enabled | 0: Unknown
-    accessibilitySupport: 0,
+  accessibilitySupport: {
+    default: "auto",
+    choices: ["auto", "on", "off"],
+  },
 
-    accessibilityPageSize: 10,
+  accessibilityPageSize: 10,
 
-    // "always" | "languageDefined" | "beforeWhitespace" | "never"
-    autoClosingBrackets: "languageDefined",
+  autoClosingBrackets: {
+    default: "languageDefined",
+    choices: ["always", "languageDefined", "beforeWhitespace", "never"],
+  },
 
-    // "always" | "auto" | "never"
-    autoClosingOvertype: "auto",
+  autoClosingOvertype: {
+    default: "auto",
+    choices: ["always", "auto", "never"],
+  },
 
-    // "always" | "languageDefined" | "beforeWhitespace" | "never"
-    autoClosingQuotes: "languageDefined",
+  autoClosingQuotes: {
+    default: "languageDefined",
+    choices: ["always", "languageDefined", "beforeWhitespace", "never"],
+  },
 
-    // 4: Full | 3: Advanced | 2: Brackets | 1: Keep | 0: None
-    autoIndent: 3,
+  autoIndent: {
+    default: "advanced",
+    choices: ["none", "keep", "brackets", "advanced", "full"],
+  },
 
-    automaticLayout: false,
+  autoSurround: {
+    default: "languageDefined",
+    choices: ["languageDefined", "quotes", "brackets", "never"],
+  },
 
-    // "languageDefined" | "quotes" | "brackets" | "never"
-    autoSurround: "languageDefined",
+  codeLens: true,
 
-    codeLens: true,
+  colorDecorators: true,
 
-    colorDecorators: true,
+  columnSelection: false,
 
-    columnSelection: false,
+  comments: { ignoreEmptyLines: true, insertSpace: true },
 
-    comments: {ignoreEmptyLines: true, insertSpace: true},
+  contextmenu: true,
 
-    contextmenu: true,
+  copyWithSyntaxHighlighting: true,
 
-    copyWithSyntaxHighlighting: true,
+  cursorBlinking: {
+    default: "blink",
+    choices: ["blink", "smooth", "phase", "expand", "solid"],
+  },
 
-    // 5: Solid | 4: Expand | 3: Phase | 2: Smooth | 1: Blink | 0: Hidden
-    cursorBlinking: 1,
+  cursorSmoothCaretAnimation: false,
 
-    cursorSmoothCaretAnimation: false,
+  cursorStyle: {
+    default: "line",
+    choices: [
+      "line",
+      "block",
+      "underline",
+      "line-thin",
+      "block-outline",
+      "underline-thin",
+    ],
+  },
 
-    // 6: UnderlineThin | 5: BlockOutline | 4: LineThin | 3: Underline | 2: Block | 1: Line
-    cursorStyle: 1,
+  cursorSurroundingLines: 0,
 
-    cursorSurroundingLines: 0,
+  cursorSurroundingLinesStyle: {
+    default: "default",
+    choices: ["default", "all"],
+  },
 
-    // "default" | "all"
-    cursorSurroundingLinesStyle: "default",
+  cursorWidth: 0,
 
-    cursorWidth: 0,
+  disableLayerHinting: false,
 
-    disableLayerHinting: false,
+  disableMonospaceOptimizations: false,
 
-    disableMonospaceOptimizations: false,
+  dragAndDrop: true,
 
-    dragAndDrop: true,
+  emptySelectionClipboard: true,
 
-    emptySelectionClipboard: true,
+  fastScrollSensitivity: 5,
 
-    fastScrollSensitivity: 5,
+  find: {
+    cursorMoveOnType: true,
 
-    find: {
-        cursorMoveOnType: true,
+    seedSearchStringFromSelection: true,
 
-        seedSearchStringFromSelection: true,
-
-        // "never" | "always" | "multiline"
-        autoFindInSelection: "never",
-
-        globalFindClipboard: false,
-
-        addExtraSpaceOnTop: true,
-
-        loop:true
+    autoFindInSelection: {
+      default: "never",
+      choices: ["never", "always", "multiline"],
     },
 
-    fixedOverflowWidgets: false,
+    globalFindClipboard: false,
 
-    folding: true,
+    addExtraSpaceOnTop: true,
 
-    // "auto" | "indentation"
-    foldingStrategy: "auto",
+    loop: true,
+  },
 
-    foldingHighlight: true,
+  fixedOverflowWidgets: false,
 
-    unfoldOnClickAfterEndOfLine: false,
+  folding: true,
 
-    fontFamily: "Consolas, 'Courier New', monospace",
+  foldingStrategy: {
+    default: "auto",
+    choices: ["auto", "indentation"],
+  },
 
-    fontSize: 14,
+  foldingHighlight: true,
 
-    fontWeight: "normal",
+  unfoldOnClickAfterEndOfLine: false,
 
-    formatOnPaste: false,
+  fontFamily: "Consolas, 'Courier New', monospace",
 
-    formatOnType: false,
+  fontSize: 14,
 
-    glyphMargin: false,
+  fontWeight: "normal",
 
-    gotoLocation: {
-        // "peek" | "gotoAndPeek" | "goto"
-        multiple: "peek",
-        multipleDefinitions: "peek",
-        multipleTypeDefinitions: "peek",
-        multipleDeclarations: "peek",
-        multipleImplementations: "peek",
-        multipleReferences: "peek",
+  formatOnPaste: false,
 
-        alternativeDefinitionCommand: "editor.action.goToReferences",
-        alternativeTypeDefinitionCommand: "editor.action.goToReferences",
-        alternativeDeclarationCommand: "editor.action.goToReferences",
-        alternativeImplementationCommand: "",
-        alternativeReferenceCommand: ""
+  formatOnType: false,
+
+  glyphMargin: false,
+
+  gotoLocation: {
+    multiple: {
+      default: "peek",
+      choices: ["peek", "gotoAndPeek", "goto"],
+    },
+    multipleDefinitions: {
+      default: "peek",
+      choices: ["peek", "gotoAndPeek", "goto"],
+    },
+    multipleTypeDefinitions: {
+      default: "peek",
+      choices: ["peek", "gotoAndPeek", "goto"],
+    },
+    multipleDeclarations: {
+      default: "peek",
+      choices: ["peek", "gotoAndPeek", "goto"],
+    },
+    multipleImplementations: {
+      default: "peek",
+      choices: ["peek", "gotoAndPeek", "goto"],
+    },
+    multipleReferences: {
+      default: "peek",
+      choices: ["peek", "gotoAndPeek", "goto"],
     },
 
-    hideCursorInOverviewRuler: false,
+    alternativeDefinitionCommand: "editor.action.goToReferences",
+    alternativeTypeDefinitionCommand: "editor.action.goToReferences",
+    alternativeDeclarationCommand: "editor.action.goToReferences",
+    alternativeImplementationCommand: "",
+    alternativeReferenceCommand: "",
+  },
 
-    highlightActiveIndentGuide: true,
+  hideCursorInOverviewRuler: false,
 
-    hover: {
-        enabled: true,
-        delay: 300,
-        sticky: true
+  highlightActiveIndentGuide: true,
+
+  hover: {
+    enabled: true,
+    delay: 300,
+    sticky: true,
+  },
+
+  inDiffEditor: false,
+
+  letterSpacing: 0,
+
+  lightbulb: { enabled: true },
+
+  lineDecorationsWidth: "10px",
+
+  lineHeight: 19,
+
+  lineNumbers: {
+    default: "on",
+    choices: ["on", "off", "relative", "interval"],
+  },
+
+  lineNumbersMinChars: 5,
+
+  links: true,
+
+  matchBrackets: {
+    default: "always",
+    choices: ["never", "near", "always"],
+  },
+
+  minimap: {
+    enabled: true,
+
+    size: {
+      default: "proportional",
+      choices: ["proportional", "fill", "fit"],
     },
 
-    inDiffEditor: false,
-
-    letterSpacing: 0,
-
-    lightbulb: {enabled: true},
-
-    lineDecorationsWidth: "10px",
-
-    lineHeight: 19,
-
-    // 0: Off | 1: On | 2: Relative | 3: Interval
-    lineNumbers: 1,
-
-    lineNumbersMinChars: 5,
-
-    links: true,
-
-    // "never" | "near" | "always"
-    matchBrackets: "always",
-
-    minimap: {
-        enabled: true,
-
-        // "proportional" | "fill" | "fit"
-        size: "proportional",
-
-        // "right" | "left"
-        side: "right",
-
-        // "always" | "mouseover"
-        showSlider: "mouseover",
-
-        renderCharacters: true,
-
-        maxColumn: 120,
-
-        scale: 1
+    side: {
+      default: "right",
+      choices: ["right", "left"],
     },
 
-    // "text" | "default" | "copy"
-    mouseStyle: "text",
-
-    mouseWheelScrollSensitivity: 1,
-
-    mouseWheelZoom: false,
-
-    multiCursorMergeOverlapping: true,
-
-    // "ctrlCmd" | "alt"
-    multiCursorModifier: "altKey",
-
-    // "spread" | "full"
-    multiCursorPaste: "spread",
-
-    occurrencesHighlight: true,
-
-    overviewRulerBorder: true,
-
-    overviewRulerLanes: 2,
-
-    padding: {"top": 2, "bottom": 2},
-
-    parameterHints: {enabled: true, cycle: false},
-
-    // "tree" | "editor"
-    peekWidgetDefaultFocus: "tree",
-
-    definitionLinkOpensInPeek: false,
-
-    quickSuggestions: {
-        other: true,
-        comments: false,
-        strings: false
+    showSlider: {
+      default: "mouseover",
+      choices: ["always", "mouseover"],
     },
 
-    quickSuggestionsDelay: 10,
+    renderCharacters: true,
 
-    renameOnType: false,
+    maxColumn: 120,
 
-    renderControlCharacters: false,
+    scale: 1,
+  },
 
-    renderIndentGuides: true,
+  mouseStyle: {
+    default: "text",
+    choices: ["text", "default", "copy"],
+  },
 
-    renderFinalNewline: true,
+  mouseWheelScrollSensitivity: 1,
 
-    // "none" | "gutter" | "line" | "all"
-    renderLineHighlight: "line",
+  mouseWheelZoom: false,
 
-    renderLineHighlightOnlyWhenFocus: false,
+  multiCursorMergeOverlapping: true,
 
-    // "editable" | "on" | "off"
-    renderValidationDecorations: "editable",
+  multiCursorModifier: {
+    default: "altKey",
+    choices: ["ctrlCmd", "alt"],
+  },
 
-    // "none" | "boundary" | "selection" | "trailing" | "all"
-    renderWhitespace: "selection",
+  multiCursorPaste: {
+    default: "spread",
+    choices: ["spread", "full"],
+  },
 
-    revealHorizontalRightPadding: 30,
+  occurrencesHighlight: true,
 
-    roundedSelection: true,
+  overviewRulerBorder: true,
 
-    scrollbar: {
-        // "auto" | "visible" | "hidden"
-        "vertical": "auto",
+  overviewRulerLanes: 2,
 
-        // "auto" | "visible" | "hidden"
-        "horizontal": "auto",
+  padding: { top: 2, bottom: 2 },
 
-        "arrowSize": 11,
+  parameterHints: { enabled: true, cycle: false },
 
-        "useShadows": true,
+  peekWidgetDefaultFocus: {
+    default: "tree",
+    choices: ["tree", "editor"],
+  },
 
-        "verticalHasArrows": false,
+  definitionLinkOpensInPeek: false,
 
-        "horizontalHasArrows": false,
+  quickSuggestions: {
+    other: true,
+    comments: false,
+    strings: false,
+  },
 
-        "horizontalScrollbarSize": 12,
+  quickSuggestionsDelay: 10,
 
-        "horizontalSliderSize": 12,
+  renameOnType: false,
 
-        "verticalScrollbarSize": 14,
+  renderControlCharacters: false,
 
-        "verticalSliderSize": 14,
+  renderIndentGuides: true,
 
-        "handleMouseWheel": true,
+  renderFinalNewline: true,
 
-        "alwaysConsumeMouseWheel": true
-    },
-    scrollBeyondLastColumn: 5,
+  renderLineHighlight: {
+    default: "line",
+    choices: ["none", "gutter", "line", "all"],
+  },
 
-    scrollBeyondLastLine: true,
+  renderLineHighlightOnlyWhenFocus: false,
 
-    scrollPredominantAxis: true,
+  renderValidationDecorations: {
+    default: "editable",
+    choices: ["editable", "on", "off"],
+  },
 
-    selectionClipboard: true,
+  renderWhitespace: {
+    default: "selection",
+    choices: ["none", "boundary", "selection", "trailing", "all"],
+  },
 
-    selectionHighlight: true,
+  revealHorizontalRightPadding: 30,
 
-    selectOnLineNumbers: true,
+  roundedSelection: true,
 
-    // "always" | "mouseover"
-    showFoldingControls: "mouseover",
-
-    showUnused: true,
-
-    showDeprecated: true,
-
-    // "top" | "bottom" | "inline" | "none"
-    snippetSuggestions: "inline",
-
-    smoothScrolling: false,
-
-    stopRenderingLineAfter: 10000,
-
-    suggest: {
-        // "insert" | "replace"
-        insertMode": "insert",
-        filterGraceful": true,
-        snippetsPreventQuickSuggestions": true,
-        localityBonus": false,
-        shareSuggestSelections": false,
-        showIcons": true,
-        maxVisibleSuggestions": 12,
-        showMethods: true,
-        showFunctions: true,
-        showConstructors: true,
-        showFields: true,
-        showVariables: true,
-        showClasses: true,
-        showStructs: true,
-        showInterfaces: true,
-        showModules: true,
-        showProperties: true,
-        showEvents: true,
-        showOperators: true,
-        showUnits: true,
-        showValues: true,
-        showConstants: true,
-        showEnums: true,
-        showEnumMembers: true,
-        showKeywords: true,
-        showWords: true,
-        showColors: true,
-        showFiles: true,
-        showReferences: true,
-        showFolders: true,
-        showTypeParameters: true,
-        showSnippets: true,
-        showUsers: true,
-        showIssues: true,
-        statusBar: {visible: false}
+  scrollbar: {
+    vertical: {
+      default: "auto",
+      choices: ["auto", "visible", "hidden"],
     },
 
-    suggestFontSize: 0,
+    horizontal: {
+      default: "auto",
+      choices: ["auto", "visible", "hidden"],
+    },
 
-    suggestLineHeight: 0,
+    arrowSize: 11,
 
-    suggestOnTriggerCharacters: true,
+    useShadows: true,
 
-    // "first" | "recentlyUsed" | "recentlyUsedByPrefix"
-    suggestSelection: "recentlyUsed",
+    verticalHasArrows: false,
 
-    // "on" | "off" | "onlySnippets"
-    tabCompletion: "off",
+    horizontalHasArrows: false,
 
-    trimAutoWhitespace: true,
+    horizontalScrollbarSize: 12,
 
-    // "off" | "prompt" | "auto"
-    unusualLineTerminators: "prompt",
+    horizontalSliderSize: 12,
 
-    useTabStops: true,
+    verticalScrollbarSize: 14,
 
-    wordSeparators: "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+    verticalSliderSize: 14,
 
-    // "off" | "on" | "wordWrapColumn" | "bounded"
-    wordWrap: "off",
+    handleMouseWheel: true,
 
-    wordWrapBreakAfterCharacters: "\t})]?|/&.,;¢°′″‰℃、。｡､￠，．：；？！％・･ゝゞヽヾーァィゥェォッャュョヮヵヶぁぃぅぇぉっゃゅょゎゕゖㇰㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺㇻㇼㇽㇾㇿ々〻ｧｨｩｪｫｬｭｮｯｰ”〉》」』】〕）］｝｣",
+    alwaysConsumeMouseWheel: true,
+  },
+  scrollBeyondLastColumn: 5,
 
-    wordWrapBreakBeforeCharacters: "([{‘“〈《「『【〔（［｛｢£¥＄￡￥+＋",
+  scrollBeyondLastLine: true,
 
-    wordWrapColumn: 80,
+  scrollPredominantAxis: true,
 
-    wordWrapMinified: true,
+  selectionClipboard: true,
 
-    // "none" | "same" | "indent" | "deepIndent"
-    wrappingIndent: "none",
+  selectionHighlight: true,
 
-    // "simple" | "advanced"
-    wrappingStrategy: "simple"
+  selectOnLineNumbers: true,
+
+  showFoldingControls: {
+    default: "mouseover",
+    choices: ["always", "mouseover"],
+  },
+
+  showUnused: true,
+
+  showDeprecated: true,
+
+  snippetSuggestions: {
+    default: "inline",
+    choices: ["top", "bottom", "inline", "none"],
+  },
+
+  smoothScrolling: false,
+
+  stopRenderingLineAfter: 10000,
+
+  suggest: {
+    insertMode: {
+      default: "insert",
+      choices: ["insert", "replace"],
+    },
+    filterGraceful: true,
+    snippetsPreventQuickSuggestions: true,
+    localityBonus: false,
+    shareSuggestSelections: false,
+    showIcons: true,
+    maxVisibleSuggestions: 12,
+    showMethods: true,
+    showFunctions: true,
+    showConstructors: true,
+    showFields: true,
+    showVariables: true,
+    showClasses: true,
+    showStructs: true,
+    showInterfaces: true,
+    showModules: true,
+    showProperties: true,
+    showEvents: true,
+    showOperators: true,
+    showUnits: true,
+    showValues: true,
+    showConstants: true,
+    showEnums: true,
+    showEnumMembers: true,
+    showKeywords: true,
+    showWords: true,
+    showColors: true,
+    showFiles: true,
+    showReferences: true,
+    showFolders: true,
+    showTypeParameters: true,
+    showSnippets: true,
+    showUsers: true,
+    showIssues: true,
+    statusBar: { visible: false },
+  },
+
+  suggestFontSize: 0,
+
+  suggestLineHeight: 0,
+
+  suggestOnTriggerCharacters: true,
+
+  suggestSelection: {
+    default: "recentlyUsed",
+    choices: ["first", "recentlyUsed", "recentlyUsedByPrefix"],
+  },
+
+  tabCompletion: {
+    default: "off",
+    choices: ["on", "off", "onlySnippets"],
+  },
+
+  trimAutoWhitespace: true,
+
+  unusualLineTerminators: {
+    default: "prompt",
+    choices: ["off", "prompt", "auto"],
+  },
+
+  useTabStops: true,
+
+  wordSeparators: "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+
+  // "off" | "on" | "wordWrapColumn" | "bounded"
+  wordWrap: "off",
+
+  wordWrapBreakAfterCharacters:
+    "\t})]?|/&.,;¢°′″‰℃、。｡､￠，．：；？！％・･ゝゞヽヾーァィゥェォッャュョヮヵヶぁぃぅぇぉっゃゅょゎゕゖㇰㇱㇲㇳㇴㇵㇶㇷㇸㇹㇺㇻㇼㇽㇾㇿ々〻ｧｨｩｪｫｬｭｮｯｰ”〉》」』】〕）］｝｣",
+
+  wordWrapBreakBeforeCharacters: "([{‘“〈《「『【〔（［｛｢£¥＄￡￥+＋",
+
+  wordWrapColumn: 80,
+
+  wordWrapMinified: true,
+
+  wrappingIndent: {
+    default: "none",
+    choices: ["none", "same", "indent", "deepIndent"],
+  },
+
+  wrappingStrategy: {
+    default: "simple",
+    choices: ["simple", "advanced"],
+  },
 };
 
-export default PREFS;
+var DEFAULT_PREFS = {};
+for (var p in PREFS) {
+  if (PREFS[p].default !== undefined) {
+    DEFAULT_PREFS[p] = PREFS[p].default;
+  } else {
+    DEFAULT_PREFS[p] = PREFS[p];
+  }
+}
+
+export { PREFS, DEFAULT_PREFS };

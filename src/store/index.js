@@ -4,6 +4,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import localfile from "./local-files.js";
+import settings from "./settings.js";
 
 function find_id(id, items) {
   for (var i = 0; i < items.length; i++) {
@@ -26,8 +27,15 @@ var Store = new Vuex.Store({
     release: null,
     needs_update: false,
     editor: null,
+    dialog: null,
   },
   mutations: {
+    show_dialog(state, d) {
+      state.dialog = d;
+    },
+    close_dialog(state) {
+      state.dialog = null;
+    },
     set_release(state, release) {
       state.release = release;
     },
@@ -153,6 +161,7 @@ var Store = new Vuex.Store({
   },
   modules: {
     localfile,
+    settings,
   },
 });
 

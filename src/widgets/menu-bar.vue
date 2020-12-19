@@ -29,6 +29,10 @@ var Menus = [
       { name: "Open Directory", action: "localfile/open_directory" },
     ],
   },
+  {
+    name: "Preferences",
+    items: [{ name: "Editor Settings", action: "settings/edit_editor" }],
+  },
 ];
 
 export default {

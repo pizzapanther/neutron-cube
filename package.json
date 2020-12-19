@@ -28,6 +28,7 @@
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "debounce": "^1.2.0",
+    "deepcopy": "^2.1.0",
     "md5": "^2.3.0",
     "monaco-editor": "^0.21.2",
     "npm-force-resolutions": "0.0.3",

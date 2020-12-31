@@ -50,31 +50,24 @@
         <v-col>
           <v-divider></v-divider>
           <br />
-          <h2>Changelog</h2>
-          <ul class="changelog">
-            <li>
-              <strong>V0.2 - 11/28/2020</strong>
-              <br />
-              <ul>
-                <li>Watch files for changes on disk</li>
-                <li>Watch directories for changes on disk</li>
-              </ul>
-            </li>
-            <li>
-              <strong>V0.1 - 11/26/2020</strong>
-              <br />
-              <ul>
-                <li>Initial Release</li>
-              </ul>
-            </li>
-          </ul>
+          <div v-html="changelog"></div>
         </v-col>
       </v-row>
     </v-container>
   </v-main>
 </template>
 <script>
+import * as showdown from 'showdown';
+
+import changelogText from '../docs/changelog.md';
+
 export default {
+  data() {
+    var converter = new showdown.Converter();
+    var changelog = converter.makeHtml(changelogText);
+
+    return {changelog};
+  },
   computed: {
     compatible() {
       if (window.showOpenFilePicker && window.showDirectoryPicker) {

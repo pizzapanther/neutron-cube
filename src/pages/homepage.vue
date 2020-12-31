@@ -57,16 +57,12 @@
   </v-main>
 </template>
 <script>
-import * as showdown from 'showdown';
-
-import changelogText from '../docs/changelog.md';
+import axios from "axios";
+import * as showdown from "showdown";
 
 export default {
   data() {
-    var converter = new showdown.Converter();
-    var changelog = converter.makeHtml(changelogText);
-
-    return {changelog};
+    return { changelog: "" };
   },
   computed: {
     compatible() {
@@ -76,6 +72,18 @@ export default {
 
       return false;
     },
+  },
+  mounted() {
+    axios
+      .get("/docs/changelog.md")
+      .then((result) => {
+        var converter = new showdown.Converter();
+        this.changelog = converter.makeHtml(result.data);
+      })
+      .catch((e) => {
+        var converter = new showdown.Converter();
+        this.changelog = converter.makeHtml("## Error getting changelog");
+      });
   },
 };
 </script>

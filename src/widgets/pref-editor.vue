@@ -1,8 +1,8 @@
 <template>
-  <v-container>
+  <v-container class="pref-widget">
     <v-row v-for="(value, key) in items">
       <v-col>
-        <fieldset v-if="is_complex(value)">
+        <fieldset class="pgroup" v-if="is_complex(value)">
           <legend>{{ decamel(key) }}</legend>
           <pref-editor v-model="items[key]" :schema="schema[key]"></pref-editor>
         </fieldset>
@@ -10,6 +10,7 @@
           v-else-if="is_boolean(value)"
           v-model="items[key]"
           :label="decamel(key)"
+          dense
         ></v-switch>
         <v-text-field
           outlined
@@ -18,6 +19,7 @@
           v-model="items[key]"
           type="number"
           :step="1"
+          dense
         ></v-text-field>
         <v-select
           outlined
@@ -25,12 +27,14 @@
           :items="choices(key)"
           :label="decamel(key)"
           v-model="items[key]"
+          dense
         ></v-select>
         <v-text-field
           outlined
           :label="decamel(key)"
           v-else
           v-model="items[key]"
+          dense
         ></v-text-field>
       </v-col>
     </v-row>
@@ -89,14 +93,28 @@ export default {
   },
 };
 </script>
-<style lang="less" scoped>
-fieldset {
-  border-style: dashed;
-  border-width: 1px;
-}
+<style lang="less">
+.pref-widget {
+  fieldset.pgroup {
+    border-style: dashed;
+    border-width: 1px;
 
-legend {
-  font-weight: bold;
-  padding: 0 5px;
+    legend {
+      font-weight: bold;
+      padding: 0 5px;
+    }
+  }
+
+  .v-text-field__details {
+    display: none;
+  }
+
+  .v-messages {
+    display: none;
+  }
+
+  .v-input--selection-controls {
+    margin-top: 0;
+  }
 }
 </style>

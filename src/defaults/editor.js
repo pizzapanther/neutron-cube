@@ -449,13 +449,22 @@ const PREFS = {
   },
 };
 
-var DEFAULT_PREFS = {};
-for (var p in PREFS) {
-  if (PREFS[p].default !== undefined) {
-    DEFAULT_PREFS[p] = PREFS[p].default;
-  } else {
-    DEFAULT_PREFS[p] = PREFS[p];
+function get_defaults(obj, prefs) {
+  for (var p in prefs) {
+    if (prefs[p].default !== undefined) {
+      obj[p] = prefs[p].default;
+    } else {
+      if (typeof prefs[p] == "object") {
+        obj[p] = get_defaults({}, prefs[p]);
+      } else {
+        obj[p] = prefs[p];
+      }
+    }
   }
+
+  return obj;
 }
+
+var DEFAULT_PREFS = get_defaults({}, PREFS);
 
 export { PREFS, DEFAULT_PREFS };

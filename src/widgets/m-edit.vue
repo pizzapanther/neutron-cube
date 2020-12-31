@@ -75,6 +75,9 @@ export default {
         this.$store.commit("set_editor", value);
       },
     },
+    editor_prefs() {
+      return this.$store.state.settings.editor;
+    },
     release() {
       return this.$store.state.release;
     },
@@ -123,6 +126,11 @@ export default {
     winheight(to, from) {
       this.init();
     },
+    editor_prefs(to, from) {
+      if (this.editor) {
+        this.editor.updateOptions(to);
+      }
+    },
   },
   mounted() {
     this.init();
@@ -133,7 +141,8 @@ export default {
         if (this.files.length > 0) {
           if (!this.editor) {
             this.editor = monaco.editor.create(
-              document.getElementById("m-editor")
+              document.getElementById("m-editor"),
+              this.editor_prefs
             );
             bind_keys(this.$store, monaco, this.editor);
           }

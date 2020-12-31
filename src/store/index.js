@@ -24,6 +24,7 @@ var Store = new Vuex.Store({
     winsize: { width: 0, height: 0 },
     snack_text: null,
     snack_timeout: 3000,
+    snack_attrs: { top: true, center: true },
     release: null,
     needs_update: false,
     editor: null,
@@ -81,6 +82,12 @@ var Store = new Vuex.Store({
       if (kwargs.timeout) {
         state.snack_timeout = kwargs.timeout;
       }
+
+      if (kwargs.attrs) {
+        state.snack_attrs = kwargs.attrs;
+      } else {
+        state.snack_attrs = { top: true, center: true };
+      }
     },
     set_file_attrs(state, kwargs) {
       var file = find_id(kwargs.id, state.files);
@@ -125,7 +132,8 @@ var Store = new Vuex.Store({
           .then(() => {
             context.commit("set_snack", {
               text: `Saved: ${active.name}`,
-              timeout: 750,
+              timeout: 500,
+              attrs: { top: true, right: true },
             });
           })
           .catch((e) => {

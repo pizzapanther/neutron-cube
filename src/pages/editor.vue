@@ -1,9 +1,15 @@
 <template>
   <div class="height100">
     <div v-if="compatible" class="height100">
-      <v-snackbar top v-model="snack_model" :timeout="snack_timeout">{{
-        snack_text
-      }}</v-snackbar>
+      <v-snackbar
+        top
+        v-model="snack_model"
+        :timeout="snack_timeout"
+        :top="snack_attrs.top"
+        :right="snack_attrs.right"
+        :center="snack_attrs.center"
+        >{{ snack_text }}</v-snackbar
+      >
       <menu-bar></menu-bar>
       <component v-bind:is="dialog"></component>
       <v-navigation-drawer v-model="drawer" app>
@@ -66,9 +72,14 @@ export default {
       },
       set(value) {
         if (!value) {
-          this.$store.commit("set_snack", { text: null });
+          setTimeout(() => {
+            this.$store.commit("set_snack", { text: null });
+          }, 100);
         }
       },
+    },
+    snack_attrs() {
+      return this.$store.state.snack_attrs;
     },
     snack_timeout() {
       return this.$store.state.snack_timeout;

@@ -24,14 +24,20 @@ export default {
 
       state.editor = ret;
     },
+    update_editor_prefs(state, prefs) {
+      state.editor = prefs;
+      localStorage.setItem("settings_editor", JSON.stringify(prefs));
+    },
   },
   actions: {
     edit_editor(context) {
-      context.commit(
-        "show_dialog",
-        { mixins: [EditorPrefsDialog] },
-        { root: true }
-      );
+      setTimeout(() => {
+        context.commit(
+          "show_dialog",
+          { mixins: [EditorPrefsDialog] },
+          { root: true }
+        );
+      }, 50);
     },
   },
 };

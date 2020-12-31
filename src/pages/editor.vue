@@ -74,7 +74,7 @@ export default {
         if (!value) {
           setTimeout(() => {
             this.$store.commit("set_snack", { text: null });
-          }, 100);
+          }, 300);
         }
       },
     },

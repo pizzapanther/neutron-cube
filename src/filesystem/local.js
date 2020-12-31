@@ -10,47 +10,21 @@ export class LocalFile extends BaseFile {
     this.filetype = "local";
   }
 
-  read_from_source() {
-    return new Promise((resolve, reject) => {
-      this.fh
-        .getFile()
-        .then((file) => {
-          var reader = new FileReader();
-          reader.onload = () => {
-            resolve({
-              size: file.size,
-              lastModified: file.lastModified,
-              text: reader.result,
-            });
-          };
-          reader.readAsText(file);
-        })
-        .catch((e) => {
-          reject(e);
-        });
-    });
+  async read_from_source() {
+    var file = await this.fh.getFile();
+    var contents = await file.text();
+    return {
+      size: file.size,
+      lastModified: file.lastModified,
+      text: contents,
+    };
   }
 
-  save() {
-    return new Promise((resolve, reject) => {
-      var wh;
-      this.fh
-        .createWritable()
-        .then((writeable) => {
-          wh = writeable;
-          return wh.write(this.model.getValue());
-        })
-        .then(() => {
-          return wh.close();
-        })
-        .then(() => {
-          this.post_save();
-          resolve();
-        })
-        .catch((e) => {
-          reject(e);
-        });
-    });
+  async save() {
+    var wh = await this.fh.createWritable();
+    await wh.write(this.model.getValue());
+    await wh.close();
+    this.post_save();
   }
 
   static open_files(context) {

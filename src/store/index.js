@@ -132,7 +132,7 @@ var Store = new Vuex.Store({
           .then(() => {
             context.commit("set_snack", {
               text: `Saved: ${active.name}`,
-              timeout: 500,
+              timeout: 300,
               attrs: { top: true, right: true },
             });
           })
@@ -155,7 +155,8 @@ var Store = new Vuex.Store({
         .then(() => {
           context.commit("set_snack", {
             text: "All Files Saved",
-            timeout: 500,
+            timeout: 300,
+            attrs: { top: true, right: true },
           });
         })
         .catch((e) => {

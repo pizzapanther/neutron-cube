@@ -1,4 +1,4 @@
-import debounce from "debounce";
+import { throttle } from "throttle-debounce";
 import md5 from "md5";
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,9 +18,9 @@ export class BaseFile {
     this.changed = false;
     this.filehash = null;
     this.needs_reload = false;
-    this.model_change = debounce(() => {
+    this.model_change = throttle(1000, false, () => {
       this._model_change();
-    }, 1000);
+    });
   }
 
   init_model(editor) {

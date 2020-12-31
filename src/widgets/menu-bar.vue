@@ -6,8 +6,13 @@
           <v-btn text v-bind="attrs" v-on="on">{{ menu.name }}</v-btn>
         </template>
         <v-list>
-          <v-list-item link v-for="item in menu.items" :key="item.name">
-            <v-list-item-title @click="menu_action(item.action, item.payload)">
+          <v-list-item
+            link
+            v-for="item in menu.items"
+            :key="item.name"
+            @click="menu_action(item.action, item.payload)"
+          >
+            <v-list-item-title>
               {{ item.name }}
             </v-list-item-title>
           </v-list-item>

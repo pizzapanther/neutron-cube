@@ -10,3 +10,5 @@ parcel build $ROOT/language/typescript/ts.worker.js $OPTS
 parcel build $ROOT/editor/editor.worker.js $OPTS
 
 cp -rv src/docs dist
+mkdir dist/themes
+cp -rv node_modules/monaco-themes/themes/* dist/themes

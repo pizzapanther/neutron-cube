@@ -1,3 +1,10 @@
+import { THEME_CHOICES } from "./themes.js";
+var THEMES = ["vs", "vs-dark", "hc-black"];
+
+THEME_CHOICES.forEach((t) => {
+  THEMES.push(t);
+});
+
 const PREFS = {
   acceptSuggestionOnCommitCharacter: true,
 
@@ -413,6 +420,11 @@ const PREFS = {
   tabCompletion: {
     default: "off",
     choices: ["on", "off", "onlySnippets"],
+  },
+
+  theme: {
+    default: "vs",
+    choices: THEMES,
   },
 
   trimAutoWhitespace: true,

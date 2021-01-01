@@ -3,8 +3,8 @@
     <v-card class="editor-settings">
       <v-card-title>Editor Settings</v-card-title>
       <v-divider></v-divider>
-      <v-card-text>
-        <pref-editor v-model="prefs" :schema="schema"></pref-editor>
+      <v-card-text id="prefScrollable">
+        <pref-editor v-model="prefs" :schema="schema" :level="1"></pref-editor>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions>

@@ -38,9 +38,33 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 import * as monaco from "monaco-editor";
 
+import { THEME_LIST } from "../defaults/themes.js";
 import bind_keys from "../lib/keybinding.js";
+
+var THEME_LOAD = [];
+THEME_LIST.forEach((t, i) => {
+  THEME_LOAD.push(axios.get(`/themes/${t[1]}.json`));
+});
+
+Promise.all(THEME_LOAD)
+  .then((themes) => {
+    themes.forEach((t, i) => {
+      monaco.editor.defineTheme(THEME_LIST[i][0], t.data);
+    });
+  })
+  .catch((e) => {
+    console.error("Error loading themes", e);
+  });
+
+// for (var t in THEMES) {
+
+//     .then(data => {
+//         monaco.editor.defineTheme('monokai', data);
+//     })
+// }
 
 self.MonacoEnvironment = {
   getWorkerUrl: function (moduleId, label) {

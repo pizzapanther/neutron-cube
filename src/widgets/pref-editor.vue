@@ -1,7 +1,14 @@
 <template>
   <v-container class="pref-widget">
-    <v-row v-for="(value, key) in items">
+    <v-row v-if="level" class="toc">
       <v-col>
+        <a v-for="t in toc" @click="scroll_to(t)" href="javascript: void(0);">{{
+          t[4]
+        }}</a>
+      </v-col>
+    </v-row>
+    <v-row v-for="(value, key) in items">
+      <v-col :id="colid(key)">
         <fieldset class="pgroup" v-if="is_complex(value)">
           <legend>{{ decamel(key) }}</legend>
           <pref-editor v-model="items[key]" :schema="schema[key]"></pref-editor>
@@ -45,12 +52,34 @@ export default {
   components: {
     PrefEditor: () => import("./pref-editor.vue"),
   },
-  props: ["items", "schema"],
+  props: ["items", "schema", "level"],
   model: { prop: "items", event: "input" },
   data() {
-    return {};
+    return {
+      toc: [],
+    };
   },
   methods: {
+    scroll_to(tid) {
+      var myElement = document.getElementById(tid);
+      var topPos = myElement.offsetTop;
+      document.getElementById("prefScrollable").scrollTop = topPos - 108;
+    },
+    colid(key) {
+      if (this.level) {
+        var l = "toc-" + key[0].toUpperCase();
+        if (this.toc.indexOf(l) == -1) {
+          this.toc.push(l);
+          return l;
+        } else if (this.toc.indexOf(l) > -1) {
+          return this.toc[this.toc.indexOf(l)];
+        }
+
+        return key;
+      }
+
+      return "";
+    },
     is_complex(obj) {
       if (typeof obj == "object") {
         if (obj.default !== undefined) {
@@ -102,6 +131,24 @@ export default {
     legend {
       font-weight: bold;
       padding: 0 5px;
+    }
+  }
+
+  .toc {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    .col {
+      display: flex;
+      flex-direction: row;
+
+      a {
+        flex: 1;
+        font-weight: bold;
+      }
     }
   }
 
